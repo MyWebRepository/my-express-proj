@@ -1,16 +1,11 @@
-//var module = require("module")
 var fs = require("fs");
 
 var user = {
-    "user4" : {
-        "name" : "mohit",
-        "password" : "password4",
-        "profession" : "teacher",
-        "id": 4
-    }
+    "name": "mohit",
+    "password": "password4",
+    "profession": "teacher",
+    "id": 4
 };
-
-var userFunc = {};
 
 exports.getUsers = function (req, res) {
     fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
@@ -23,7 +18,7 @@ exports.getUserById = function (req, res) {
     // First read existing users.
     fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
         users = JSON.parse( data );
-        var user = users["user" + req.params.id];
+        var user = users.find(function(u) { return u.id == req.params.id;});
         console.log( user );
         res.end( JSON.stringify(user));
     });
@@ -49,6 +44,4 @@ exports.deleteUser = function (req, res) {
 
         res.end( JSON.stringify(data));
     });
-}
-
-//exports.userFunc = userFunc;
+};
